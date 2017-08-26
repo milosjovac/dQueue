@@ -6,7 +6,6 @@ var abi = [{ 'constant': true, 'inputs': [], 'name': 'getQueuesAddresses', 'outp
 var address = '0xe9b2429dC3Ae57592585E2D5c2685CC43173EA4a'
 var contract = web3.eth.contract(abi).at(address)
 
-
 var createQueue = function (title, desc, freeToEnter, data, callback) {
   contract.createQueue(title, desc, freeToEnter, data, { from: '0x00ce9F958957f1f8A0059f36004f8aF9E4814006' }, callback)
 }
@@ -46,16 +45,6 @@ var getAllValidQueues = function () {
       return Rx.Observable.return(output)
     })
 }
-
-  // .subscribe(
-  // res => {
-  //   console.log('Next: ' + res)
-  // },
-  // err => {
-  //   console.log('Error: ' + err)
-  // },
-  // () => console.log('completed')
-  // )
 
 exports.getAllValidQueues = getAllValidQueues
 exports.createQueue = Rx.Observable.fromNodeCallback(createQueue)

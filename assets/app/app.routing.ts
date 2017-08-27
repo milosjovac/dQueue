@@ -6,17 +6,17 @@ import { Routes, RouterModule } from '@angular/router';
 import { HomeComponent } from './home/home.component';
 import { UserComponent } from './user/user.component';
 import { TablesComponent } from './tables/tables.component';
-import { TypographyComponent } from './typography/typography.component';
 import { IconsComponent } from './icons/icons.component';
 import { NotificationsComponent } from './notifications/notifications.component';
 import { QueuesComponent } from "./queues/queues.component";
+import { QueueDetailsComponent } from "./queueDetails/queue.details.component";
 
 const routes: Routes = [
   { path: 'queues', component: QueuesComponent },
+  { path: 'queue/:address', component: QueueDetailsComponent },
   { path: 'dashboard', component: HomeComponent },
   { path: 'user', component: UserComponent },
   { path: 'table', component: TablesComponent },
-  { path: 'typography', component: TypographyComponent },
   { path: 'icons', component: IconsComponent },
   { path: 'notifications', component: NotificationsComponent },
   { path: '', redirectTo: 'dashboard', pathMatch: 'full' }

@@ -3,7 +3,13 @@ import { LocationStrategy, PlatformLocation, Location } from '@angular/common';
 import { LegendItem, ChartType } from '../lbd/lbd-chart/lbd-chart.component';
 import * as Chartist from 'chartist';
 
-declare var $:any;
+var queueManager = require('../queue.manager.fronend')
+var queue = require('../queue.frontend')
+
+declare var $: any;
+import 'rxjs/Rx'
+
+
 
 @Component({
   selector: 'app-home',
@@ -26,6 +32,8 @@ export class HomeComponent implements OnInit {
   public activityChartOptions: any;
   public activityChartResponsive: any[];
   public activityChartLegendItems: LegendItem[];
+
+  public events: string[] = []
   constructor() { }
 
   ngOnInit () {
@@ -107,27 +115,18 @@ export class HomeComponent implements OnInit {
       { title: 'Tesla Model S', imageClass: 'fa fa-circle text-info' },
       { title: 'BMW 5 Series', imageClass: 'fa fa-circle text-danger' }
     ];
+
+    // this.showNotification('top','left')
+    // res[0].queueAdr
+
+    // .flatMap(() => {
+    //   // for every contract take events
+    // })
     
-    this.showNotification('top','left')
-
   }
 
-  showNotification (from, align) {
-    const type = ['', 'info', 'success', 'warning', 'danger'];
 
-    var color = Math.floor((Math.random() * 4) + 1);
-    $.notify({
-      icon: "pe-7s-gift",
-      message: "Welcome to <b>Light Bootstrap Dashboard</b> - a beautiful freebie for every web developer."
-    }, {
-        type: type[color],
-        timer: 1000,
-        placement: {
-          from: from,
-          align: align
-        }
-      });
-  }
+  
 
 
 

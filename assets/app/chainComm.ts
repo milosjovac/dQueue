@@ -1,6 +1,6 @@
 var express = require('express')
 var router = express.Router()
-var queueManager = require('../modules/queue.manager.js')
+var queueManager = require('queue.manager.js')
 const nodemailer = require('nodemailer')
 
 // create reusable transporter object using the default SMTP transport

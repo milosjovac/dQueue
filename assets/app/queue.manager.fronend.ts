@@ -28,7 +28,6 @@ var mapQueuesO = Rx.Observable.bindNodeCallback(mapQueues)
 var getAllValidQueues = function () {
   return getAllQueuesO()
     .flatMap((adresses) => {
-      debugger
       var observables = []
       adresses.forEach(function (address) {
         observables.push(mapQueuesO(address))
@@ -41,7 +40,6 @@ var getAllValidQueues = function () {
       return Rx.Observable.zip(...observables)
     })
     .flatMap((queues) => {
-      debugger
       var output = []
       queues.forEach(function (queue) {
         if (parseInt(queue[3]) > 0) {

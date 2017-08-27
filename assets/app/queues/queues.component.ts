@@ -26,11 +26,6 @@ export class QueuesComponent implements OnInit {
         this.tableData1 = {
           headerRow: ['ID', 'Address', 'Title', 'Description', 'Owner'],
           dataRows: []
-          //   ['1', '0x28dd7d6f41331e5013ee6c802641cc63b06c238a', 'Donor queue', 'Official Serbia..', '0x28dd7d6f41331e5013ee6c802641cc63b06c238a'],
-          //   ['2', '0x28dd7d6f41331e5013ee6c802641cc63b06c238a', 'Donor queue', 'Official Serbia..', '0x28dd7d6f41331e5013ee6c802641cc63b06c238a'],
-          //   ['3', '0x28dd7d6f41331e5013ee6c802641cc63b06c238a', 'Donor queue', 'Official Serbia..', '0x28dd7d6f41331e5013ee6c802641cc63b06c238a'],
-          //   ['4', '0x28dd7d6f41331e5013ee6c802641cc63b06c238a', 'Donor queue', 'Official Serbia..', '0x28dd7d6f41331e5013ee6c802641cc63b06c238a']
-          // ]
         };
         debugger
         let result = data
@@ -40,7 +35,7 @@ export class QueuesComponent implements OnInit {
           row.push(i)
           row.push(result[i]['queueAdr'])
           row.push(result[i]['title'])
-          row.push(result[i]['description'])
+          row.push(result[i]['descrition'])
           row.push(result[i]['ownerAdr'])
           dataRows.push(row)
         }

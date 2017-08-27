@@ -1,6 +1,6 @@
-var Web3 = require('web3')
 var Rx = require('rx')
-var web3 = new Web3(new Web3.providers.HttpProvider('http://localhost:8545'))
+// var web3 = new Web3(new Web3.providers.HttpProvider('http://localhost:8545'))
+var web3 = window.web3
 var crypto = require('crypto')
 
 var abi = [{ 'constant': true, 'inputs': [{ 'name': 'index', 'type': 'uint256' }], 'name': 'getClientAtIndex', 'outputs': [{ 'name': '', 'type': 'address' }, { 'name': '', 'type': 'uint256' }, { 'name': '', 'type': 'bytes32' }], 'payable': false, 'stateMutability': 'view', 'type': 'function' }, { 'constant': false, 'inputs': [], 'name': 'kill', 'outputs': [], 'payable': false, 'stateMutability': 'nonpayable', 'type': 'function' }, { 'constant': false, 'inputs': [], 'name': 'popClient', 'outputs': [{ 'name': '', 'type': 'address' }, { 'name': '', 'type': 'uint256' }, { 'name': '', 'type': 'bytes32' }], 'payable': false, 'stateMutability': 'nonpayable', 'type': 'function' }, { 'constant': false, 'inputs': [{ 'name': 'clientAddress', 'type': 'address' }, { 'name': 'userData', 'type': 'bytes32' }], 'name': 'pushClient', 'outputs': [], 'payable': false, 'stateMutability': 'nonpayable', 'type': 'function' }, { 'constant': true, 'inputs': [], 'name': 'getNumberOfClients', 'outputs': [{ 'name': '', 'type': 'uint256' }], 'payable': false, 'stateMutability': 'view', 'type': 'function' }, { 'inputs': [{ 'name': 'tit', 'type': 'bytes32' }, { 'name': 'desc', 'type': 'bytes32' }, { 'name': 'isFreeToEnter', 'type': 'bool' }, { 'name': 'dat', 'type': 'bytes32' }, { 'name': 'creatorAddress', 'type': 'address' }], 'payable': false, 'stateMutability': 'nonpayable', 'type': 'constructor' }, { 'anonymous': false, 'inputs': [{ 'indexed': false, 'name': 'cliendAddress', 'type': 'address' }, { 'indexed': false, 'name': 'data', 'type': 'bytes32' }], 'name': 'ClientAdded', 'type': 'event' }, { 'anonymous': false, 'inputs': [{ 'indexed': false, 'name': 'clientAddress', 'type': 'address' }, { 'indexed': false, 'name': 'timestamp', 'type': 'uint256' }, { 'indexed': false, 'name': 'data', 'type': 'bytes32' }], 'name': 'ClientRemoved', 'type': 'event' }, { 'anonymous': false, 'inputs': [{ 'indexed': false, 'name': 'queueAddress', 'type': 'address' }], 'name': 'QueueKilled', 'type': 'event' }]
@@ -41,7 +41,8 @@ var pushClient = function (contract, clientAddress, userData, callback) {
   })
 }
 
-var popClient = function (contract, callback) {
+var popClient = function (address, callback) {
+  var contract = web3.eth.contract(abi).at(address)
   contract.popClient({ from: '0x00ce9F958957f1f8A0059f36004f8aF9E4814006' }, function (err, data) {
     console.log('Pop client' + JSON.stringify(data))
     if (!err) {
@@ -100,11 +101,12 @@ var randomHex = function (callback) {
   })
 }
 
-var doPushClient = function (contract, callback) {
+var doPushClient = function (address, data, callback) {
+  var contract = web3.eth.contract(abi).at(address)
   randomHex(function (err, hex) {
     if (!err) {
       console.log('Push client ID: ' + hex)
-      pushClient(contract, hex, 'user data 4', callback)
+      pushClient(contract, hex, JSON.stringify(data), callback)
     } else {
       console.log('Error: ' + err)
       callback(err)
@@ -130,7 +132,7 @@ var doPushClient = function (contract, callback) {
 //   console.log('Res: ', res)
 // })
 
-var getAllClientsForContract(contractAddress) {
+var getAllClientsForContract = function (contractAddress) {
   var contractVar = web3.eth.contract(abi).at(contractAddress)
   return getNumberOfClientsO(contractVar).flatMap((num) => {
     var observables = []

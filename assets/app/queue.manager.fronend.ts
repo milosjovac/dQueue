@@ -40,7 +40,7 @@ var getAllValidQueues = function () {
       // }
       return Rx.Observable.zip(...observables)
     })
-    .map((queues) => {
+    .flatMap((queues) => {
       var output = []
       queues.forEach(function (queue) {
         if (parseInt(queue[3]) > 0) {

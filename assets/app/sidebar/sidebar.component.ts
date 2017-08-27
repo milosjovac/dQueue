@@ -11,7 +11,6 @@ export const ROUTES: RouteInfo[] = [
   { path: 'queues', title: 'Queue Explorer', icon: 'pe-7s-global', class: '' },
   { path: 'dashboard', title: 'Statistics', icon: 'pe-7s-graph', class: '' },
   { path: 'user', title: 'User Profile', icon: 'pe-7s-user', class: '' },
-  { path: 'typography', title: 'Typography', icon: 'pe-7s-news-paper', class: '' },
   { path: 'icons', title: 'Icons', icon: 'pe-7s-science', class: '' },
   { path: 'notifications', title: 'Notifications', icon: 'pe-7s-bell', class: '' }
 ];

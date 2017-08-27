@@ -7,6 +7,7 @@
     <link rel="icon" type="image/png" href="./assets/img/favicon.png">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
     <title>Distributed Queue by DApp Module Team</title>
+    <script src="jquery-3.2.1.min.js"></script>
     <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no' name='viewport' />
     <!--     Fonts and icons     -->
     <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700,200" rel="stylesheet" />
@@ -28,7 +29,7 @@
                     <span class="navbar-toggler-bar bar2"></span>
                     <span class="navbar-toggler-bar bar3"></span>
                 </button>
-                <a class="navbar-brand" href="http://dqueue.net" rel="tooltip" title="Distributed Queue by DApp Module Team" data-placement="bottom" target="_blank">
+                <a class="navbar-brand" href="#" rel="tooltip" title="Distributed Queue by DApp Module Team" data-placement="bottom">
                     dQueue
                 </a>
             </div>
@@ -92,7 +93,7 @@
                 <div class="container">
                     <div class="row">
                         <div class="card card-signup" data-background-color="orange">
-                            <form class="form" method="" action="">
+                            <form class="form" id="myForm" method="" action="/api/v1/subscribe">
                                 <div class="header header-primary text-center">
                                     <h4 class="title title-up">Subscribe</h4>
                                     <div class="social-line">
@@ -104,17 +105,17 @@
                                         <span class="input-group-addon">
                                             <i class="now-ui-icons users_circle-08"></i>
                                         </span>
-                                        <input type="text" class="form-control" placeholder="First Name...">
+                                        <input type="text" name="name" class="form-control" placeholder="First Name...">
                                     </div>
                                     <div class="input-group form-group-no-border">
                                         <span class="input-group-addon">
                                             <i class="now-ui-icons ui-1_email-85"></i>
                                         </span>
-                                        <input type="text" class="form-control" placeholder="Email...">
+                                        <input type="text" name="email" class="form-control" placeholder="Email...">
                                     </div>
                                 </div>
                                 <div class="footer text-center">
-                                    <a href="#pablo" class="btn btn-neutral btn-round btn-lg">Subscribe</a>
+                                  <input type="submit" id="submitButton" class="btn btn-neutral btn-round btn-lg" value="Subscribe">
                                 </div>
                             </form>
                         </div>
@@ -246,6 +247,33 @@
         // the body of this function is in assets/js/now-ui-kit.js
         nowuiKit.initSliders();
     });
+
+   /* attach a submit handler to the form */
+   $("#myForm").submit(function(event) {
+    
+      /* stop form from submitting normally */
+      event.preventDefault();
+
+      /* get some values from elements on the page: */
+      var $form = $(this),
+          name = $form.find('input[name="name"]').val(),
+          email = $form.find('input[name="email"]').val(),
+          url = $form.attr('action');
+
+      /* Send the data using post */
+      var posting = $.post(url, {
+          name: name,
+          email: email
+      });
+
+      /* Put the results in a div */
+      posting.done(function(data) {
+          var content = $(data).find('#content');
+          $("#result").empty().append(content);
+      });
+  });
+
+
 
     function scrollToDownload() {
 
